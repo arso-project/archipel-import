@@ -1,0 +1,59 @@
+{
+  "origin": "http://audioarchiv.blogsport.de/archiv/",
+  "delay": 500,
+  "find": ".sb-archives ul li a:first",
+  "set": "month",
+  "variables": {
+    "monthUrl": "@href"
+  },
+  "next": {
+    "follow": "@href",
+    "find": "#rollingcontent .hentry .entry-title a",
+    "variables": {
+      "postUrl": "@href"
+    },
+    "next": {
+      "follow": "@href",
+      "find": "#current-content .hentry",
+      "variables": {
+        "postIdProp": "@id",
+        "title": "h3 a",
+        "tags": [".entry-meta .entry-tags a"],
+        "date": ".entry-date"
+      }
+    }
+  },
+  "actions": {
+    "translate": {
+      "postIdProp": [{
+        "match": "post-(.*)",
+        "to": {
+          "postid": "$1"
+        }
+      }]
+    },
+    "jsonManifest": {
+      "filepath": "audioarchiv/manifest.json",
+      "append": true,
+      "properties": {
+        "title": "${title}",
+        "postid": "${postid}",
+        "source": "${postUrl}",
+        "tags": "tags",
+        "path": "audioarchiv/${postid}/index.html"
+      }
+    },
+    "readability": {
+      "url": "${postUrl}",
+      "filepath": "audioarchiv/${postid}/body.html",
+      "overwrite": false
+    },
+    "download": [
+      {
+        "url": "${postUrl}",
+        "filepath": "audioarchiv/${postid}/full.html",
+        "overwrite": false
+      }
+    ]
+  }
+}
