@@ -19,7 +19,6 @@
   "dependencies": {
     "libxmljs": "^0.19.5",
     "libxmljs-dom": "github:agonbar/libxmljs-dom#b4376e3",
-    "scavenge": "github:Frando/scavenge#master",
-    "sqlite3": "^4.0.6"
+    "scavenge": "github:Frando/scavenge#master"
   }
 }
